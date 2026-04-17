@@ -19,11 +19,12 @@ interface ResumeData {
     description: string;
   }>;
   education: Array<{
-    school: string;
+    institution: string;
     degree: string;
-    field: string;
-    startDate: string;
-    endDate: string;
+    field?: string;
+    startDate?: string;
+    endDate?: string;
+    courses?: string;
   }>;
   skills: Array<{
     name: string;
@@ -144,9 +145,18 @@ export default function SimpleTemplate({ data }: { data: ResumeData }) {
             <div className="space-y-8">
               {education?.map((edu, i) => (
                 <div key={i}>
-                  <h3 className="text-lg font-bold">{edu.degree} in {edu.field}</h3>
-                  <p className="text-zinc-600 font-medium truncate">{edu.school}</p>
-                  <p className="text-sm text-zinc-400 mt-1">{edu.startDate} — {edu.endDate}</p>
+                  <h3 className="text-lg font-bold">
+                    {edu.degree}{edu.field ? ` in ${edu.field}` : ''}
+                  </h3>
+                  <p className="text-zinc-600 font-medium leading-tight">{edu.institution}</p>
+                  {(edu.startDate || edu.endDate) && (
+                    <p className="text-sm text-zinc-400 mt-1">{edu.startDate} — {edu.endDate}</p>
+                  )}
+                  {edu.courses && (
+                    <p className="text-xs text-zinc-500 mt-2 leading-relaxed">
+                      <span className="font-bold text-zinc-400">COURSES:</span> {edu.courses}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>

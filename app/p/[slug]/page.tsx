@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 import { supabase } from '../../../lib/supabase';
 import SimpleTemplate from '../../../components/templates/SimpleTemplate';
+import ExecutiveTemplate from '../../../components/templates/ExecutiveTemplate';
+import CreativeTemplate from '../../../components/templates/CreativeTemplate';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,8 +51,16 @@ export default async function PortfolioPage({ params }: PageProps) {
     projects: rawResume.projects || [],
   };
 
-  // Render the template
-  return <SimpleTemplate data={formattedData as any} />;
+  // Render the selected template
+  switch (portfolio.template_id) {
+    case 'executive':
+      return <ExecutiveTemplate data={formattedData as any} />;
+    case 'creative':
+      return <CreativeTemplate data={formattedData as any} />;
+    case 'simple':
+    default:
+      return <SimpleTemplate data={formattedData as any} />;
+  }
 }
 
 // Optional: Force dynamic rendering to ensure fresh data
