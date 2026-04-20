@@ -68,61 +68,64 @@ export default function CreativeTemplate({ data }: { data: ResumeData }) {
         </header>
 
         {/* Experience Section */}
-        <section className="mb-40">
-          <div className="flex items-center gap-6 mb-16">
-            <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-purple-500">Experience</h2>
-            <div className="h-[1px] flex-1 bg-zinc-800"></div>
-          </div>
-          <div className="space-y-24">
-            {experience?.map((exp, i) => (
-              <div key={i} className="group">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                  <div className="md:col-span-3">
-                    <span className="text-sm font-bold text-zinc-600 tracking-widest uppercase">
-                      {exp.startDate} — {exp.endDate}
-                    </span>
-                  </div>
-                  <div className="md:col-span-9">
-                    <h3 className="text-3xl font-bold mb-4 group-hover:text-purple-400 transition-colors">
-                      {exp.role}
-                    </h3>
-                    <p className="text-zinc-500 font-bold mb-6 text-lg uppercase tracking-wide">
-                      {exp.company} • {exp.location}
-                    </p>
-                    <p className="text-zinc-400 leading-relaxed text-lg whitespace-pre-line max-w-2xl">
-                      {exp.description}
-                    </p>
+        {experience && experience.length > 0 && (
+          <section className="mb-40">
+            <div className="flex items-center gap-6 mb-16">
+              <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-purple-500">Experience</h2>
+              <div className="h-[1px] flex-1 bg-zinc-800"></div>
+            </div>
+            <div className="space-y-24">
+              {experience.map((exp, i) => (
+                <div key={i} className="group">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                    <div className="md:col-span-3">
+                      <span className="text-sm font-bold text-zinc-600 tracking-widest uppercase">
+                        {exp.startDate} — {exp.endDate}
+                      </span>
+                    </div>
+                    <div className="md:col-span-9">
+                      <h3 className="text-3xl font-bold mb-4 group-hover:text-purple-400 transition-colors">
+                        {exp.role}
+                      </h3>
+                      <p className="text-zinc-500 font-bold mb-6 text-lg uppercase tracking-wide">
+                        {exp.company} • {exp.location}
+                      </p>
+                      <p className="text-zinc-400 leading-relaxed text-lg whitespace-pre-line max-w-2xl">
+                        {exp.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Projects Grid */}
-        <section className="mb-40">
-          <div className="flex items-center gap-6 mb-16">
-            <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-blue-500">Projects</h2>
-            <div className="h-[1px] flex-1 bg-zinc-800"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {projects?.map((project, i) => (
-              <div key={i} className="group relative">
-                <div className="aspect-video bg-zinc-900 rounded-3xl border border-zinc-800 mb-8 p-10 flex flex-col justify-end group-hover:border-zinc-700 transition-all overflow-hidden relative">
-                   {/* Abstract project art */}
-                   <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-800/50 rounded-bl-[100px] border-b border-l border-zinc-700/50 group-hover:scale-110 transition-transform"></div>
-                   
-                   <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                   <p className="text-zinc-500 leading-relaxed line-clamp-2">{project.description}</p>
-                   
-                   {project.link && (
-                     <a href={project.link} className="absolute inset-0 z-20"></a>
-                   )}
+        {projects && projects.length > 0 && (
+          <section className="mb-40">
+            <div className="flex items-center gap-6 mb-16">
+              <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-blue-500">Projects</h2>
+              <div className="h-[1px] flex-1 bg-zinc-800"></div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {projects.map((project, i) => (
+                <div key={i} className="group relative">
+                  <div className="aspect-video bg-zinc-900 rounded-3xl border border-zinc-800 mb-8 p-10 flex flex-col justify-end group-hover:border-zinc-700 transition-all overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-zinc-800/50 rounded-bl-[100px] border-b border-l border-zinc-700/50 group-hover:scale-110 transition-transform"></div>
+                    
+                    <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
+                    <p className="text-zinc-500 leading-relaxed line-clamp-2">{project.description}</p>
+                    
+                    {project.link && (
+                      <a href={project.link} className="absolute inset-0 z-20"></a>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Bottom Section: Skills & Education */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-32">
@@ -137,18 +140,20 @@ export default function CreativeTemplate({ data }: { data: ResumeData }) {
              </div>
           </section>
 
-          <section>
-             <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-zinc-600 mb-12">Education</h2>
-             <div className="space-y-12">
-               {education?.map((edu, i) => (
-                 <div key={i}>
-                   <h3 className="text-xl font-bold mb-2">{edu.degree}</h3>
-                   <p className="text-zinc-500 font-medium">{edu.institution}</p>
-                   <p className="text-xs text-zinc-700 font-bold uppercase mt-2 tracking-widest">{edu.startDate} - {edu.endDate}</p>
-                 </div>
-               ))}
-             </div>
-          </section>
+          {education && education.length > 0 && (
+            <section>
+              <h2 className="text-xs font-bold uppercase tracking-[0.4em] text-zinc-600 mb-12">Education</h2>
+              <div className="space-y-12">
+                {education.map((edu, i) => (
+                  <div key={i}>
+                    <h3 className="text-xl font-bold mb-2">{edu.degree}</h3>
+                    <p className="text-zinc-500 font-medium">{edu.institution}</p>
+                    <p className="text-xs text-zinc-700 font-bold uppercase mt-2 tracking-widest">{edu.startDate} - {edu.endDate}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
 
         {/* Footer */}

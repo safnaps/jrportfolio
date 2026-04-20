@@ -21,10 +21,12 @@ async function inspectData() {
         console.log(`- Slug: ${p.slug}`);
         console.log(`  Template: ${p.template_id}`);
         console.log(`  Resume ID: ${p.resume_id}`);
+        const rawProjects = p.resumes?.projects || [];
+        const filteredProjects = rawProjects.filter(prj => prj.title?.trim() || prj.description?.trim());
         console.log(`  Resume Title: ${p.resumes?.title}`);
-        console.log(`  Projects Count: ${p.resumes?.projects?.length || 0}`);
-        if (p.resumes?.projects?.length > 0) {
-            console.log(`  Project Titles: ${p.resumes.projects.map(pr => pr.title || 'EMPTY').join(', ')}`);
+        console.log(`  Projects Count: ${rawProjects.length} (Filtered: ${filteredProjects.length})`);
+        if (filteredProjects.length > 0) {
+            console.log(`  Project Details: ${filteredProjects.map(pr => `[Title: ${pr.title || 'EMPTY'}, Desc: ${pr.description?.substring(0, 20) || 'EMPTY'}]`).join(', ')}`);
         }
         console.log('---');
     });

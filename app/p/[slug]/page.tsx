@@ -27,6 +27,8 @@ export default async function PortfolioPage({ params }: PageProps) {
   // The joined data comes back in the 'resumes' property
   const rawResume = portfolio.resumes;
 
+  console.log(`[DEBUG] Portfolio Render: slug=${slug}, resumeId=${rawResume?.id}, rawProjectsCount=${rawResume?.projects?.length || 0}`);
+
   if (!rawResume) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -46,10 +48,10 @@ export default async function PortfolioPage({ params }: PageProps) {
       jobTitle: rawResume.personalDetails?.jobTitle || rawResume.targetJobTitle || 'Professional',
     },
     summary: rawResume.summary || rawResume.targetJobDescription || 'Passionate professional dedicated to delivering high-quality results.',
-    experience: (rawResume.experience || []).filter((e: any) => e.company || e.role),
-    education: (rawResume.education || []).filter((e: any) => e.institution || e.degree),
+    experience: (rawResume.experience || []).filter((e: any) => e.company?.trim() || e.role?.trim()),
+    education: (rawResume.education || []).filter((e: any) => e.institution?.trim() || e.degree?.trim()),
     skills: rawResume.skills || [],
-    projects: (rawResume.projects || []).filter((p: any) => p.title || p.description),
+    projects: (rawResume.projects || []).filter((p: any) => p.title?.trim() || p.description?.trim()),
   };
 
   // Render the selected template

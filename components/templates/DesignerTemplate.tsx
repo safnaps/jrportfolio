@@ -48,15 +48,6 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
   // Use the generated AI placeholder images
   const profileImage = personalDetails?.image || '/profile_male.png';
 
-  // Make sure we have at least 2 projects for the grid, pad with placeholders if needed
-  const displayProjects = [...(projects || [])];
-  while (displayProjects.length < 2) {
-    displayProjects.push({
-      title: "Sample Project",
-      description: "A showcase of responsive design and structured architecture.",
-    });
-  }
-
   return (
     <div className="min-h-screen bg-white text-zinc-900 font-sans scroll-smooth">
       {/* ---------------- SECTION 1: HOME ---------------- */}
@@ -135,16 +126,20 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
           </h2>
           <div className="space-y-8 text-zinc-500 font-serif leading-relaxed text-[17px] max-w-2xl">
             <p>
-              I am a <span className="text-[#d83838]">multidisciplinary professional</span>, focused on {personalDetails?.jobTitle || "Design"}, based in {country}. I am highly passionate about my work and craft.
+              I am a <span className="text-[#d83838]">professional</span> focused on {personalDetails?.jobTitle || "my craft"}, based in {country}. I am highly passionate about my work.
             </p>
-            <p className="text-zinc-600">
-              {summary || "I can also code user-friendly interfaces with clean, semantic markup. I love creating user centered, simple, easy to use but efficient websites that solve problems, grow great business goals and look awesome."}
-            </p>
+            {summary && (
+              <p className="text-zinc-600">
+                {summary}
+              </p>
+            )}
+            {skills && skills.length > 0 && (
+              <p>
+                My favorite everyday tools are <span className="text-[#d83838]">critical thinking</span>, creativity, and solid workflows. I'm advanced in {skills.slice(0, 4).map(s => s.name).join(', ')}.
+              </p>
+            )}
             <p>
-              My favorite everyday tools are <span className="text-[#d83838]">critical thinking</span>, creativity, and solid workflows. I'm advanced in {skills?.slice(0, 4).map(s => s.name).join(', ') || 'HTML, CSS, Design, and Strategy'}.
-            </p>
-            <p>
-              I genuinely enjoy solving problems through design to aim at a great user experience.
+              I genuinely enjoy solving problems and aiming at a great user experience.
             </p>
           </div>
           <div className="mt-16">
