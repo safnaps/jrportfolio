@@ -46,6 +46,7 @@ export default async function PortfolioPage({ params }: PageProps) {
       phone: rawResume.personalDetails?.phone || '',
       location: `${rawResume.personalDetails?.city || ''}, ${rawResume.personalDetails?.country || ''}`,
       jobTitle: rawResume.personalDetails?.jobTitle || rawResume.targetJobTitle || 'Professional',
+      image: rawResume.personalDetails?.image,
     },
     summary: rawResume.summary || rawResume.targetJobDescription || 'Passionate professional dedicated to delivering high-quality results.',
     experience: (rawResume.experience || []).filter((e: any) => e.company?.trim() || e.role?.trim()),
@@ -53,6 +54,14 @@ export default async function PortfolioPage({ params }: PageProps) {
     skills: rawResume.skills || [],
     projects: (rawResume.projects || []).filter((p: any) => p.title?.trim() || p.description?.trim()),
   };
+
+  console.log('[DEBUG] Formatted Data:', JSON.stringify({
+    fullName: formattedData.personalDetails.fullName,
+    jobTitle: formattedData.personalDetails.jobTitle,
+    image: formattedData.personalDetails.image,
+    experienceCount: formattedData.experience.length,
+    projectsCount: formattedData.projects.length
+  }, null, 2));
 
   // Render the selected template
   switch (portfolio.template_id) {
