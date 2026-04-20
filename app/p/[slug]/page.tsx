@@ -3,6 +3,7 @@ import { supabase } from '../../../lib/supabase';
 import SimpleTemplate from '../../../components/templates/SimpleTemplate';
 import ExecutiveTemplate from '../../../components/templates/ExecutiveTemplate';
 import CreativeTemplate from '../../../components/templates/CreativeTemplate';
+import DesignerTemplate from '../../../components/templates/DesignerTemplate';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -55,6 +56,8 @@ export default async function PortfolioPage({ params }: PageProps) {
   switch (portfolio.template_id) {
     case 'executive':
       return <ExecutiveTemplate data={formattedData as any} />;
+    case 'designer':
+      return <DesignerTemplate data={formattedData as any} />;
     case 'creative':
       return <CreativeTemplate data={formattedData as any} />;
     case 'simple':
