@@ -49,24 +49,25 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
   const profileImage = personalDetails?.image || '/profile_male.png';
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 font-sans scroll-smooth">
+    <div className="min-h-screen bg-white text-zinc-900 font-sans scroll-smooth overflow-x-hidden">
       {/* ---------------- SECTION 1: HOME ---------------- */}
-      <div id="home" className="flex flex-col md:flex-row h-screen w-full">
+      <div id="home" className="flex flex-col md:flex-row min-h-screen md:h-screen w-full relative">
         {/* Left Side */}
-        <div className="w-full md:w-[55%] flex flex-col justify-center px-12 md:px-24 bg-white relative">
+        <div className="w-full md:w-[55%] flex flex-col justify-center px-8 md:px-24 bg-white relative py-24 md:py-0">
           <div className="absolute top-12 left-12 md:left-24 font-serif text-2xl italic tracking-wide text-zinc-800 font-medium">
             {personalDetails?.fullName || "Marko Peric"}
           </div>
           
-          <div className="max-w-2xl mt-20">
-            <h1 className="text-4xl lg:text-6xl font-serif font-bold text-zinc-900 leading-[1.2]">
-              {personalDetails?.jobTitle || "UX UI Designer"} <span className="font-normal">&amp;</span> <br/>
+          <div className="max-w-2xl">
+            <h1 className="text-4xl lg:text-6xl font-serif font-bold text-zinc-900 leading-[1.2] lg:leading-[1.1] tracking-tight">
+              {personalDetails?.jobTitle || "Professional"} <span className="font-normal">&amp;</span> <br/>
               enthusiast <br/>
               from <span className="text-[#d83838]">{country}</span>.
             </h1>
           </div>
 
-          <div className="absolute bottom-12 flex space-x-3 text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] flex-wrap gap-y-2">
+          {/* Social Links - Static on mobile, Absolute on Desktop */}
+          <div className="mt-12 md:absolute md:bottom-12 flex flex-wrap gap-x-3 gap-y-2 text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
             <a href="#" className="hover:text-zinc-600">Dribbble</a><span>-</span>
             <a href="#" className="hover:text-zinc-600">Instagram</a><span>-</span>
             <a href="#" className="hover:text-zinc-600">LinkedIn</a><span>-</span>
@@ -76,11 +77,11 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
         </div>
 
         {/* Right Side Image */}
-        <div className="w-full md:w-[45%] h-full bg-[#1c1c1c] relative overflow-hidden">
+        <div className="w-full md:w-[45%] h-[60vh] md:h-full bg-[#1c1c1c] relative overflow-hidden">
           <img 
             src={profileImage} 
             alt="Profile View" 
-            className="w-full h-full object-cover grayscale opacity-90 object-top" 
+            className="w-full h-full object-cover opacity-90 object-top" 
           />
           <div className="absolute inset-0 bg-black/20 mix-blend-multiply flex items-center justify-center text-zinc-800"></div>
           
@@ -98,7 +99,7 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
       </div>
 
       {/* ---------------- SECTION 2: ABOUT ---------------- */}
-      <div id="about" className="flex flex-col md:flex-row min-h-screen w-full bg-white text-zinc-800 p-12 md:p-24 relative">
+      <div id="about" className="flex flex-col md:flex-row min-h-screen w-full bg-white text-zinc-800 px-8 py-20 md:p-24 relative overflow-hidden">
         <div className="absolute top-12 left-12 md:left-24 font-serif text-2xl italic tracking-wide text-zinc-800 font-medium">
           <a href="#home">{personalDetails?.fullName || "Marko Peric"}</a>
         </div>
@@ -114,7 +115,7 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
             <img 
               src={profileImage} 
               alt="Profile About" 
-              className="w-full h-full object-cover grayscale" 
+              className="w-full h-full object-cover" 
             />
           </div>
         </div>
@@ -171,25 +172,19 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
             </p>
           </div>
 
-          <div className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20 max-w-5xl w-full z-10">
+          <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 max-w-5xl w-full z-10">
             {projects.slice(0, 4).map((proj, idx) => (
               <div key={idx} className="flex flex-col group">
-                <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden mb-8 relative">
-                  <img 
-                    src={proj.image || `/project_${(idx % 2) + 1}.png`} 
-                    alt={proj.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                  />
-                  {proj.link && (
-                    <a href={proj.link} className="absolute inset-0 z-10" target="_blank" rel="noreferrer"></a>
-                  )}
+                <div>
+                  <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-800 mb-2 inline-block px-2 py-1 bg-zinc-50 border border-zinc-100">
+                    {proj.link ? (
+                      <a href={proj.link} target="_blank" rel="noreferrer" className="hover:text-[#d83838] transition-colors">{proj.title}</a>
+                    ) : proj.title}
+                  </h3>
+                  <p className="text-zinc-500 font-serif leading-relaxed text-[15px] line-clamp-3">
+                    {proj.description}
+                  </p>
                 </div>
-                <h3 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-800 mb-3 bg-zinc-100/80 inline-block px-2 py-1 absolute mt-[280px] ml-4 md:mt-[230px] lg:mt-[280px]">
-                  {proj.title}
-                </h3>
-                <p className="text-zinc-500 font-serif line-clamp-3 p-4">
-                  {proj.description}
-                </p>
               </div>
             ))}
           </div>
@@ -207,18 +202,18 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
           <a href="#contact" className="text-[#d83838]">Contact</a>
         </div>
 
-        <div className="flex-grow flex flex-col justify-center items-start max-w-4xl mt-32">
-          <h2 className="text-5xl md:text-[5.5rem] font-serif font-black text-zinc-900 leading-[1.1] tracking-tight mb-8">
+        <div className="flex-grow flex flex-col justify-center items-start max-w-4xl py-24">
+          <h2 className="text-4xl md:text-[5.5rem] font-serif font-black text-zinc-900 leading-[1.1] tracking-tight mb-8">
             Interested in working with me?<br/>
             Or just want to say 'Hello'?
           </h2>
-          <a href={`mailto:${personalDetails?.email}`} className="text-3xl md:text-[2.5rem] font-serif font-black text-[#d83838] hover:text-red-700 transition-colors tracking-tight">
+          <a href={`mailto:${personalDetails?.email}`} className="text-2xl md:text-[2.5rem] font-serif font-black text-[#d83838] hover:text-red-700 transition-colors tracking-tight break-all">
             {personalDetails?.email || "hello@example.com"}
           </a>
         </div>
 
-        <div className="absolute bottom-12 left-12 md:left-24 right-12 md:right-24 flex flex-col md:flex-row justify-between items-start md:items-center text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em]">
-          <div className="flex space-x-3 mb-4 md:mb-0 flex-wrap gap-y-2">
+        <div className="mt-auto pt-12 md:pt-0 flex flex-col md:flex-row justify-between items-start md:items-center text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] gap-y-8">
+          <div className="flex flex-wrap gap-x-3 gap-y-2">
             <a href="#" className="hover:text-zinc-600 transition-colors">Dribbble</a><span>-</span>
             <a href="#" className="hover:text-zinc-600 transition-colors">Instagram</a><span>-</span>
             <a href="#" className="hover:text-zinc-600 transition-colors">LinkedIn</a><span>-</span>
@@ -226,7 +221,7 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
             <a href={`mailto:${personalDetails?.email}`} className="hover:text-zinc-600 transition-colors">Email</a>
           </div>
           <div>
-            &copy; {new Date().getFullYear()} {personalDetails?.fullName || "Marko Peric"}
+            &copy; {new Date().getFullYear()} {personalDetails?.fullName || "Professional"}
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ export default async function PortfolioPage({ params }: PageProps) {
       phone: rawResume.personalDetails?.phone || '',
       location: `${rawResume.personalDetails?.city || ''}, ${rawResume.personalDetails?.country || ''}`,
       jobTitle: rawResume.personalDetails?.jobTitle || rawResume.targetJobTitle || 'Professional',
-      image: rawResume.personalDetails?.image,
+      image: rawResume.personalDetails?.image || rawResume.photoUri,
     },
     summary: rawResume.summary || rawResume.targetJobDescription || 'Passionate professional dedicated to delivering high-quality results.',
     experience: (rawResume.experience || []).filter((e: any) => e.company?.trim() || e.role?.trim()),
