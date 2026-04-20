@@ -156,49 +156,50 @@ export default function DesignerTemplate({ data }: { data: ResumeData }) {
       </div>
 
       {/* ---------------- SECTION 3: WORK / PROJECTS ---------------- */}
-      <div id="work" className="flex flex-col min-h-screen w-full bg-white text-zinc-800 p-12 md:p-24 relative">
-        <div className="absolute top-12 left-12 md:left-24 font-serif text-2xl italic tracking-wide text-zinc-800 font-medium z-20">
-          <a href="#home">{personalDetails?.fullName || "Marko Peric"}</a>
-        </div>
-        <div className="absolute top-12 right-12 md:right-24 flex space-x-8 text-[11px] font-bold text-zinc-800 uppercase tracking-[0.1em] z-10 hidden md:flex z-20">
-          <a href="#about" className="hover:text-zinc-500 transition-colors">About</a>
-          <a href="#work" className="text-[#d83838]">Work</a>
-          <a href="#contact" className="hover:text-zinc-500 transition-colors">Contact</a>
-        </div>
+      {projects && projects.length > 0 && (
+        <div id="work" className="flex flex-col min-h-screen w-full bg-white text-zinc-800 p-12 md:p-24 relative">
+          <div className="absolute top-12 left-12 md:left-24 font-serif text-2xl italic tracking-wide text-zinc-800 font-medium z-20">
+            <a href="#home">{personalDetails?.fullName || "Marko Peric"}</a>
+          </div>
+          <div className="absolute top-12 right-12 md:right-24 flex space-x-8 text-[11px] font-bold text-zinc-800 uppercase tracking-[0.1em] z-10 hidden md:flex z-20">
+            <a href="#about" className="hover:text-zinc-500 transition-colors">About</a>
+            <a href="#work" className="text-[#d83838]">Work</a>
+            <a href="#contact" className="hover:text-zinc-500 transition-colors">Contact</a>
+          </div>
 
-        <div className="mt-32 max-w-2xl z-10">
-          <h2 className="text-4xl md:text-[3rem] font-serif font-black text-zinc-900 mb-6 tracking-tight">
-            Selected projects
-          </h2>
-          <p className="text-zinc-500 font-serif leading-relaxed text-[19px]">
-            I work with <span className="text-[#d83838]">clients</span> around the world to build amazing apps, products and services.
-          </p>
-        </div>
+          <div className="mt-32 max-w-2xl z-10">
+            <h2 className="text-4xl md:text-[3rem] font-serif font-black text-zinc-900 mb-6 tracking-tight">
+              Selected projects
+            </h2>
+            <p className="text-zinc-500 font-serif leading-relaxed text-[19px]">
+              I work with <span className="text-[#d83838]">clients</span> around the world to build amazing apps, products and services.
+            </p>
+          </div>
 
-        <div className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20 max-w-5xl w-full z-10">
-          {displayProjects.slice(0, 2).map((proj, idx) => (
-            <div key={idx} className="flex flex-col group">
-              <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden mb-8 relative">
-                {/* Use custom generated placeholder images depending on idx */}
-                <img 
-                  src={proj.image || `/project_${idx + 1}.png`} 
-                  alt={proj.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                />
-                {proj.link && (
-                  <a href={proj.link} className="absolute inset-0 z-10" target="_blank" rel="noreferrer"></a>
-                )}
+          <div className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20 max-w-5xl w-full z-10">
+            {projects.slice(0, 4).map((proj, idx) => (
+              <div key={idx} className="flex flex-col group">
+                <div className="w-full aspect-[4/3] bg-zinc-100 overflow-hidden mb-8 relative">
+                  <img 
+                    src={proj.image || `/project_${(idx % 2) + 1}.png`} 
+                    alt={proj.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                  />
+                  {proj.link && (
+                    <a href={proj.link} className="absolute inset-0 z-10" target="_blank" rel="noreferrer"></a>
+                  )}
+                </div>
+                <h3 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-800 mb-3 bg-zinc-100/80 inline-block px-2 py-1 absolute mt-[280px] ml-4 md:mt-[230px] lg:mt-[280px]">
+                  {proj.title}
+                </h3>
+                <p className="text-zinc-500 font-serif line-clamp-3 p-4">
+                  {proj.description}
+                </p>
               </div>
-              <h3 className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-800 mb-3 bg-zinc-100/80 inline-block px-2 py-1 absolute mt-[280px] ml-4 md:mt-[230px] lg:mt-[280px]">
-                 {proj.title}
-              </h3>
-              <p className="text-zinc-500 font-serif line-clamp-3 p-4">
-                {proj.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ---------------- SECTION 4: CONTACT ---------------- */}
       <div id="contact" className="flex flex-col min-h-screen w-full bg-white text-zinc-800 p-12 md:p-24 relative">

@@ -35,7 +35,7 @@ export default async function PortfolioPage({ params }: PageProps) {
     );
   }
 
-  // Map raw database fields to the Template's expected interface
+  // Map raw database fields to the Template's expected interface and filter out empty records
   const formattedData = {
     personalDetails: {
       fullName: rawResume.personalDetails?.fullName || 'Anonymous',
@@ -46,10 +46,10 @@ export default async function PortfolioPage({ params }: PageProps) {
       jobTitle: rawResume.personalDetails?.jobTitle || rawResume.targetJobTitle || 'Professional',
     },
     summary: rawResume.summary || rawResume.targetJobDescription || 'Passionate professional dedicated to delivering high-quality results.',
-    experience: rawResume.experience || [],
-    education: rawResume.education || [],
+    experience: (rawResume.experience || []).filter((e: any) => e.company || e.role),
+    education: (rawResume.education || []).filter((e: any) => e.institution || e.degree),
     skills: rawResume.skills || [],
-    projects: rawResume.projects || [],
+    projects: (rawResume.projects || []).filter((p: any) => p.title || p.description),
   };
 
   // Render the selected template
@@ -66,5 +66,5 @@ export default async function PortfolioPage({ params }: PageProps) {
   }
 }
 
-// Optional: Force dynamic rendering to ensure fresh data
-export const revalidate = 60; // Revalidate every minute
+// Force dynamic rendering to ensure fresh data
+export const revalidate = 0; 
